@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		F055DD311D93E3B300D664A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD301D93E3B300D664A7 /* AppDelegate.swift */; };
-		F055DD331D93E3B300D664A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD321D93E3B300D664A7 /* ViewController.swift */; };
 		F055DD361D93E3B300D664A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F055DD341D93E3B300D664A7 /* Main.storyboard */; };
 		F055DD391D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F055DD371D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideo.xcdatamodeld */; };
 		F055DD3B1D93E3B300D664A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F055DD3A1D93E3B300D664A7 /* Assets.xcassets */; };
 		F055DD3E1D93E3B300D664A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F055DD3C1D93E3B300D664A7 /* LaunchScreen.storyboard */; };
 		F055DD491D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD481D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoTests.swift */; };
 		F055DD541D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD531D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.swift */; };
+		F055DD641D93E45C00D664A7 /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD611D93E45C00D664A7 /* CameraVC.swift */; };
+		F055DD651D93E45C00D664A7 /* ShowImageVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD621D93E45C00D664A7 /* ShowImageVideoVC.swift */; };
+		F055DD661D93E45C00D664A7 /* VideoPlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F055DD631D93E45C00D664A7 /* VideoPlayVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +39,6 @@
 /* Begin PBXFileReference section */
 		F055DD2D1D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureVideoAndPlayVideoAndGrapImagesFromVideo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F055DD301D93E3B300D664A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F055DD321D93E3B300D664A7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F055DD351D93E3B300D664A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F055DD381D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CaptureVideoAndPlayVideoAndGrapImagesFromVideo.xcdatamodel; sourceTree = "<group>"; };
 		F055DD3A1D93E3B300D664A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +50,9 @@
 		F055DD4F1D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F055DD531D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureVideoAndPlayVideoAndGrapImagesFromVideoUITests.swift; sourceTree = "<group>"; };
 		F055DD551D93E3B300D664A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F055DD611D93E45C00D664A7 /* CameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
+		F055DD621D93E45C00D664A7 /* ShowImageVideoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowImageVideoVC.swift; sourceTree = "<group>"; };
+		F055DD631D93E45C00D664A7 /* VideoPlayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +104,9 @@
 			isa = PBXGroup;
 			children = (
 				F055DD301D93E3B300D664A7 /* AppDelegate.swift */,
-				F055DD321D93E3B300D664A7 /* ViewController.swift */,
+				F055DD611D93E45C00D664A7 /* CameraVC.swift */,
+				F055DD621D93E45C00D664A7 /* ShowImageVideoVC.swift */,
+				F055DD631D93E45C00D664A7 /* VideoPlayVC.swift */,
 				F055DD341D93E3B300D664A7 /* Main.storyboard */,
 				F055DD3A1D93E3B300D664A7 /* Assets.xcassets */,
 				F055DD3C1D93E3B300D664A7 /* LaunchScreen.storyboard */,
@@ -259,9 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F055DD331D93E3B300D664A7 /* ViewController.swift in Sources */,
+				F055DD651D93E45C00D664A7 /* ShowImageVideoVC.swift in Sources */,
+				F055DD661D93E45C00D664A7 /* VideoPlayVC.swift in Sources */,
 				F055DD391D93E3B300D664A7 /* CaptureVideoAndPlayVideoAndGrapImagesFromVideo.xcdatamodeld in Sources */,
 				F055DD311D93E3B300D664A7 /* AppDelegate.swift in Sources */,
+				F055DD641D93E45C00D664A7 /* CameraVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,10 +413,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brijesh Gupta (PJ9GRG8GG5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brijesh Gupta (PJ9GRG8GG5)";
 				INFOPLIST_FILE = CaptureVideoAndPlayVideoAndGrapImagesFromVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Amrit.CaptureVideoAndPlayVideoAndGrapImagesFromVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tiwariammit.CaptureVideoAndPlayVideoAndGrapImagesFromVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -416,10 +427,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Brijesh Gupta (PJ9GRG8GG5)";
 				INFOPLIST_FILE = CaptureVideoAndPlayVideoAndGrapImagesFromVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Amrit.CaptureVideoAndPlayVideoAndGrapImagesFromVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tiwariammit.CaptureVideoAndPlayVideoAndGrapImagesFromVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
