@@ -1,10 +1,8 @@
 //
 //  ViewController.swift
 //  Camera
-//
 //  Created by Amrit on 9/22/16.
 //  Copyright © 2016 Amrit. All rights reserved.
-//
 
 import UIKit
 import AVFoundation
@@ -92,9 +90,6 @@ class CameraViewController: UIViewController {
                 cameraUnavailableAlertController .addAction(settingsAction)
                 cameraUnavailableAlertController .addAction(cancelAction)
                 self.presentViewController(cameraUnavailableAlertController , animated: true, completion: nil)
-                
-                
-                
             }
         })
     }
