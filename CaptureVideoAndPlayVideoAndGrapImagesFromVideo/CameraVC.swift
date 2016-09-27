@@ -8,6 +8,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import MobileCoreServices
+import SVProgressHUD
 
 class CameraViewController: UIViewController {
     
@@ -15,7 +16,10 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var labelTime: UILabel!
     @IBOutlet weak var buttonCapture: UIButton!
+    @IBOutlet weak var lblRecording: UILabel!
+    @IBOutlet weak var btnFlashOutlet: UIButton!
     
+    @IBOutlet weak var changeCameraOutlet: UIButton!
     private var stillImageOutput: AVCaptureStillImageOutput?
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var videoFileOutput: AVCaptureMovieFileOutput?
@@ -25,19 +29,31 @@ class CameraViewController: UIViewController {
     private var videoFilePath: NSURL!
     private var timer = NSTimer()
     private var timeCounter = 0
-    private var currentPosition: AVCaptureDevicePosition = .Back
+    private var currentPosition: AVCaptureDevicePosition = .Front
     
+    //MARK:-View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         reloadCamera()
-        buttonCapture.setTitle("Record", forState: .Normal)
+        lblRecording.text = "P R E S S  O N C E  T O  R E C O R D"
+
+        let image = UIImage(named: "record")
+        let imageWithColor = image?.maskWithColor(UIColor.redColor())
+        buttonCapture.setImage(imageWithColor, forState: UIControlState.Normal)
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.changeCameraOutlet.userInteractionEnabled = true
+        self.changeCameraOutlet.alpha = 1
+        self.progressView.progress = 0
+       
+        if currentPosition == .Front{
+            self.btnFlashOutlet.hidden = true
+        }
         
-        self.navigationController?.navigationBarHidden = true
-        self.progressView.progress=0
+        self.previewView.layer.cornerRadius = 8
+        self.previewView.layer.masksToBounds = true
         
         AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo, completionHandler: {(granted: Bool) -> Void in
             if granted {
@@ -55,7 +71,7 @@ class CameraViewController: UIViewController {
                 }
                 let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (_) -> Void in
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+//                    self.navigationController?.popViewControllerAnimated(true)
                 }
                 cameraUnavailableAlertController .addAction(settingsAction)
                 cameraUnavailableAlertController .addAction(cancelAction)
@@ -83,7 +99,7 @@ class CameraViewController: UIViewController {
                 let cancelAction = UIAlertAction(title: "Okay", style: .Default) { (_) -> Void in
                     
                     
-                    self.navigationController?.popViewControllerAnimated(true)
+//                    self.navigationController?.popViewControllerAnimated(true)
                     
                     
                 }
@@ -98,11 +114,15 @@ class CameraViewController: UIViewController {
     func updateLabel(){
         timeCounter += 1
         labelTime.text = "\(timeCounter)/5"
-        progressView.progress = progressView.progress + 0.05
+        progressView.progress = progressView.progress + 0.2
         if timeCounter == 5 {
+            
             self.timer.invalidate()
             self.videoFileOutput?.stopRecording()
-            buttonCapture.setTitle("Record", forState: .Normal)
+            lblRecording.text = "P R E S S  O N C E  T O  R E C O R D"
+            let image = UIImage(named: "record")
+            let imageWithColor = image?.maskWithColor(UIColor.redColor())
+            buttonCapture.setImage(imageWithColor, forState: UIControlState.Normal)
         }
     }
     
@@ -146,19 +166,32 @@ class CameraViewController: UIViewController {
     
     @IBAction func takeVideoAction(sender: UIButton) {
         
+        self.changeCameraOutlet.userInteractionEnabled = false
+        self.changeCameraOutlet.alpha = 0.5
         if self.recording {
+            
+            let image = UIImage(named: "record")
+            let imageWithColor = image?.maskWithColor(UIColor.redColor())
+            buttonCapture.setImage(imageWithColor, forState: UIControlState.Normal)
             self.videoFileOutput?.stopRecording()
-            sender.setTitle("Record", forState: .Normal)
+            lblRecording.text = "P R E S S  O N C E  T O  R E C O R D"
             self.timer.invalidate()
+            timeCounter = 0
+            labelTime.text = "\(timeCounter)/5"
+            self.progressView.progress = 0
+            
         }else {
+            let image = UIImage(named: "stop")
+            let imageWithColor = image?.maskWithColor(UIColor.redColor())
+            buttonCapture.setImage(imageWithColor, forState: UIControlState.Normal)
             
             self.timer.invalidate()
             self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(updateLabel), userInfo: nil, repeats: true)
             self.timeCounter = 0
             self.progressView.progress = 0.0
-            
             recording = true
-            sender.setTitle("Recording", forState: .Normal)
+            lblRecording.text = "P R E S S  T O  S T O P"
+            
             if captureSession.canAddOutput(videoFileOutput){
                 self.captureSession.addOutput(videoFileOutput)
             }
@@ -166,7 +199,6 @@ class CameraViewController: UIViewController {
             let documentsURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
             let filePath = documentsURL.URLByAppendingPathComponent("temp.mov")
             self.videoFilePath = filePath
-            print(filePath)
             
             do{
                 try NSFileManager.defaultManager().removeItemAtURL(filePath)
@@ -198,8 +230,11 @@ class CameraViewController: UIViewController {
         switch self.currentPosition {
         case .Back:
             currentPosition = .Front
+            self.btnFlashOutlet.hidden = true
+
         default:
             currentPosition = .Back
+            self.btnFlashOutlet.hidden = false
         }
         reloadCamera()
     }
@@ -221,12 +256,13 @@ class CameraViewController: UIViewController {
                 try device.lockForConfiguration()
                 if (device.torchMode == AVCaptureTorchMode.On) {
                     device.torchMode = AVCaptureTorchMode.Off
-                    sender.setTitle("Flash On", forState: .Normal)
+                    sender.setImage(UIImage(named: "flashOn"), forState: UIControlState.Normal)
                     
                     
                 } else {
                     try device.setTorchModeOnWithLevel(1.0)
-                    sender.setTitle("Flash Off", forState: .Normal)
+                    sender.setImage(UIImage(named: "flashOff"), forState: UIControlState.Normal)
+
                     
                     
                 }
@@ -236,6 +272,7 @@ class CameraViewController: UIViewController {
             }
         }
     }
+    
     
     private func getDevice(position :AVCaptureDevicePosition)-> AVCaptureDevice{
         let devices = AVCaptureDevice.devices()
@@ -254,9 +291,21 @@ class CameraViewController: UIViewController {
 }
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
+    
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
         if !recording {
+            
             return
+        }
+        
+        timeCounter = 0
+        labelTime.text = "\(0)/5"
+        self.progressView.progress = 0
+        SVProgressHUD.show()
+        if let link = videoFilePath{
+            
+            convertVideoWithMediumQuality(link)
         }
         recording = false
     }
@@ -264,58 +313,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func captureOutput(captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAtURL fileURL: NSURL!, fromConnections connections: [AnyObject]!) {
         return
     }
-    
-    
-    @IBAction func showVideoAction(sender: AnyObject) {
-        
-        if let link = videoFilePath{
-            
-            convertVideoWithMediumQuality(link)
-            
-        }
-        
-    }
-    
-    
-    
-    @IBAction func showImageAction(sender: AnyObject) {
-        
-        if let link = videoFilePath{
-            let images = videoSnapshot(link)
-            let vc = storyboard?.instantiateViewControllerWithIdentifier("ShowImageVideoVC") as! ShowImageVideoVC
-            vc.totalImage = images
-            presentViewController(vc, animated: true, completion: nil)
-        }
-    }
-    
-    
-    
-    func videoSnapshot(url: NSURL) -> [UIImage] {
-        
-        let asset = AVURLAsset(URL: url)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        
-        var imageArray = [UIImage]()
-        
-        
-        for i in 0.stride(to: 4, by: 0.2) {
-            let timestamp = CMTime(seconds: Double(i), preferredTimescale: 60)
-            do {
-                let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-                let image = UIImage(CGImage: imageRef)
-                imageArray.append(image)
-            }
-            catch let error as NSError
-            {
-                print("Image generation failed with error \(error)")
-            }
-        }
-        
-        return imageArray
-        
-    }
-    
     
     func convertVideoWithMediumQuality(inputURL : NSURL){
         
@@ -343,9 +340,15 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
                     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyBoard.instantiateViewControllerWithIdentifier("VideoPlayVC") as! VideoPlayVC
                     vc.url = savePathUrl
-                    self.presentViewController(vc, animated: true, completion: nil)
-                    
-                    
+                    let transition = CATransition()
+                    transition.duration = 0.5
+                    transition.type = kCATransitionPush
+                    transition.subtype = kCATransitionFromRight
+                    self.view.window!.layer.addAnimation(transition, forKey: kCATransition)
+                    self.presentViewController(vc, animated: false){
+                        
+                        SVProgressHUD.dismiss()
+                    }
                 })
             case  AVAssetExportSessionStatus.Failed:
                 //                self.hideActivityIndicator(self.view)
